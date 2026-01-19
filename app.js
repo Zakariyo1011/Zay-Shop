@@ -1,56 +1,79 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // Kerakli DOM elementlarini tanlab olamiz
-    const leftArrow = document.querySelector('.left-arrow');
-    const rightArrow = document.querySelector('.right-arrow');
-    const indicators = document.querySelectorAll('.indicator');
-    const heroText = document.querySelector('.hero-text');
-    const heroImage = document.querySelector('.hero-image img');
-    
-    // Slayd ma'lumotlari (faqat rasmdagi birinchi slayd ma'lumotlari)
-    const slides = [
-        {
-            h1: "Repr in voluptate",
-            h2: "Ullamco laboris nisi ut",
-            p: "We bring you 100% free CSS templates for your websites. If you wish to support TemplateMo, please make a small contribution via PayPal or tell your friends about our website. Thank you.",
-            imgSrc: "i.imgur.com"
-        },
-        // Agar keyingi slaydlar rasmini yuborsangiz, shu yerga qo'shish mumkin
-        // { h1: "Keyingi sarlavha", h2: "Ikkinchi sarlavha", p: "Tavsif...", imgSrc: "rasm_linki.jpg" }
-    ];
+/* ======================
+   HERO SLIDER
+====================== */
 
-    let currentSlideIndex = 0;
+const slides = document.querySelectorAll(".hero-content");
+const dots = document.querySelectorAll(".indicator");
+let index = 0;
 
-    // Slaydni yangilash funksiyasi
-    function updateSlide(index) {
-        const currentSlide = slides[index];
+function showSlide(i) {
+    slides.forEach((slide, idx) => {
+        slide.style.display = idx === i ? "flex" : "none";
+        dots[idx].classList.toggle("active", idx === i);
+    });
+}
 
-        // Matn va rasmni o'zgartirish
-        heroText.querySelector('h1').textContent = currentSlide.h1;
-        heroText.querySelector('h2').textContent = currentSlide.h2;
-        heroText.querySelector('p').textContent = currentSlide.p;
-        heroImage.src = currentSlide.imgSrc;
+showSlide(index);
 
-        // Indikatorlarni yangilash
-        indicators.forEach(indicator => indicator.classList.remove('active'));
-        if (indicators[index]) {
-            indicators[index].classList.add('active');
+// arrows
+document.querySelector(".right-arrow").onclick = () => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+};
+
+document.querySelector(".left-arrow").onclick = () => {
+    index = (index - 1 + slides.length) % slides.length;
+    showSlide(index);
+};
+
+// dots
+dots.forEach((dot, i) => {
+    dot.onclick = () => {
+        index = i;
+        showSlide(index);
+    };
+});
+
+// autoplay
+setInterval(() => {
+    index = (index + 1) % slides.length;
+    showSlide(index);
+}, 4000);
+
+
+/* ======================
+   HAMBURGER MENU
+====================== */
+
+const menuBtn = document.querySelector(".menu-btn");
+const navLinks = document.querySelector(".nav-links");
+
+menuBtn.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+});
+
+window.addEventListener("scroll", () => {
+    const nav = document.querySelector(".navbar");
+    nav.classList.toggle("scrolled", window.scrollY > 60);
+});
+
+const topBtn = document.getElementById("backToTop");
+
+window.addEventListener("scroll", () => {
+    topBtn.style.display = window.scrollY > 300 ? "block" : "none";
+});
+
+topBtn.onclick = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+};
+
+const reveals = document.querySelectorAll(".reveal");
+
+window.addEventListener("scroll", () => {
+    reveals.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        if (top < window.innerHeight - 100) {
+            el.classList.add("active");
         }
-    }
-
-    // Chap tugma bosilganda
-    leftArrow.addEventListener('click', () => {
-        // currentSlideIndex = (currentSlideIndex - 1 + slides.length) % slides.length; // Keyingi slaydlar uchun hisob
-        // updateSlide(currentSlideIndex);
-        alert("Bu yerda chapga o'tish funksiyasi ishlaydi.");
     });
-
-    // O'ng tugma bosilganda
-    rightArrow.addEventListener('click', () => {
-        // currentSlideIndex = (currentSlideIndex + 1) % slides.length; // Keyingi slaydlar uchun hisob
-        // updateSlide(currentSlideIndex);
-        alert("Bu yerda o'ngga o'tish funksiyasi ishlaydi.");
-    });
-
-    // Sahifa yuklanganda birinchi slaydni ko'rsatish
-    updateSlide(currentSlideIndex);
 });

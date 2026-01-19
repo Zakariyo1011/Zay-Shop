@@ -24,11 +24,15 @@ a {
 
 /* Yuqori satr uslublari */
 .top-bar {
-    background-color: #212529;
-    color: #adb5bd;
-    padding: 10px 0;
-    font-size: 0.875rem;
+    background: #212934;
+    color: #cfd6e1;
+    font-size: 14px;
 }
+.top-bar i {
+    color: #59ab6e;
+    margin-right: 6px;
+}
+
 
 .top-bar-content {
     display: flex;
@@ -506,3 +510,157 @@ a {
         width: 100%;
     }
 }
+
+/* ===========================
+   HAMBURGER MENU
+=========================== */
+
+.menu-btn {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.menu-btn span {
+    width: 25px;
+    height: 3px;
+    background: #212529;
+    transition: 0.3s;
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+
+    .menu-btn {
+        display: flex;
+    }
+
+    .nav-links {
+        position: absolute;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        background: white;
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 10px 20px rgba(0,0,0,.1);
+        z-index: 99;
+    }
+
+    .nav-links a {
+        padding: 15px 0;
+        border-bottom: 1px solid #eee;
+        font-size: 18px;
+    }
+
+    .nav-links.open {
+        display: flex;
+    }
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-text {
+        max-width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .hero-image img {
+        max-width: 90%;
+    }
+}
+
+/* =========================
+   STICKY NAVBAR
+========================= */
+
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    transition: 0.3s;
+}
+
+.navbar.scrolled {
+    background: #fff;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+}
+
+.hero-text {
+    animation: fadeLeft 1s ease;
+}
+
+.hero-image {
+    animation: fadeRight 1s ease;
+}
+
+@keyframes fadeLeft {
+    from { opacity: 0; transform: translateX(-40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeRight {
+    from { opacity: 0; transform: translateX(40px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.product-card {
+    transition: 0.4s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-12px);
+    box-shadow: 0 25px 40px rgba(0,0,0,.15);
+}
+
+.product-card img {
+    transition: 0.4s ease;
+}
+
+.product-card:hover img {
+    transform: scale(1.08);
+}
+
+.card-image-wrapper img {
+    transition: 0.5s ease;
+}
+
+.card:hover img {
+    transform: rotate(3deg) scale(1.05);
+}
+
+#backToTop {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 45px;
+    height: 45px;
+    background: #59ab6e;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: none;
+    z-index: 999;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: 1s;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
